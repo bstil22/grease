@@ -1,0 +1,22 @@
+{
+  "name": "express_api",
+  "version": "1.0.0",
+  "description": "grease",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon --debug ./app.js"
+  },
+  "author": "bstil22",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^6.2.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "supertest": "^1.2.0",
+    "supertest-as-promised": "^3.1.0"
+  }
+}
