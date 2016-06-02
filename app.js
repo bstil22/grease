@@ -69,3 +69,5 @@ router.get('/sample', function (req, res){
 app.use('/api', router);
 
 app.listen(port);
+
+module.exports = app;

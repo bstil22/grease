@@ -1,12 +1,12 @@
-var supertest   = require("supertest-as-promised");
-var server    = supertest.agent("http://localhost:8080");
+var request   = require("supertest-as-promised");
 var expect    = require("expect.js");
+var app       = require('../app.js');
 
 
 describe('GET /', function() {
 
   it('parties', function(done) {
-    server
+    request(app)
       .get('/api')
       .expect(200)
       .end(function(err,res) {
@@ -19,20 +19,20 @@ describe('GET /', function() {
 describe('it authenticates a user', function (){
 
   it('creates a token', function(done) {
-    server
+    request(app)
       .post('/api/authenticate')
       .send({password: 'tool'})
       .expect(200)
       .end(function(err,res) {
         expect(res.body.success).to.be(true);
-        expect(res.body).to.include.keys('token');
+        expect(res.body.token).to.exist;
         expect(err).to.be(null);
         done()
       });
   });
 
   it('throws a 403 if no token is present', function(done) {
-    server
+    request(app)
       .post('/api/sample')
       .send({garbage: 'eval'})
       .expect(403)
@@ -44,12 +44,12 @@ describe('it authenticates a user', function (){
   });
 
   it('returns users if given a valid token', function () {
-    return server
+    return request(app)
       .post('/api/authenticate')
       .send({password: 'tool'})
       .expect(200)
       .then(function (res) {
-        return server
+        return request(app)
           .get('/api/sample')
           .set({ 'x-access-token': res.body.token})
           .expect(200)
