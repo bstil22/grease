@@ -12,7 +12,9 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
-    "jsonwebtoken": "^6.2.0"
+    "jsonwebtoken": "^6.2.0",
+    "mongodb": "^2.1.21",
+    "mongoose": "^4.4.19"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",

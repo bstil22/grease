@@ -1,9 +1,10 @@
-var express    = require('express');
-var app        = express();
-var router     = express.Router();
-var port       = process.env.PORT || 8080;
-var bodyParser = require('body-parser');
-var jwt        = require('jsonwebtoken');
+const express    = require('express');
+const app        = express();
+const router     = express.Router();
+const port       = process.env.PORT || 8080;
+const bodyParser = require('body-parser');
+const jwt        = require('jsonwebtoken');
+const User       = require('./models/user.js')
 
 app.set('secret', Math.random().toString(36).slice(2));
 
@@ -18,7 +19,7 @@ router.post('/authenticate', function(req, res) {
     res.json({ success: false, message: 'Authentication failed. Wrong password.' });
   } else {
 
-    var token = jwt.sign(sampleUser, app.get('secret'), {
+    const token = jwt.sign(sampleUser, app.get('secret'), {
       expiresIn: '1h'
     });
 
@@ -31,7 +32,7 @@ router.post('/authenticate', function(req, res) {
 });
 
 router.use(function(req, res, next) {
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
 
   if (token) {
     jwt.verify(token, app.get('secret'), function(err, decoded) {
@@ -57,13 +58,19 @@ router.use(function(req, res, next) {
 });
 
 // user model coming soon
-var sampleUser = {
+const sampleUser = {
   username: 'shed',
   pwd: 'tool'
 };
 
 router.get('/sample', function (req, res){
   res.json(sampleUser);
+});
+
+router.get('/users', function(req, res) {
+  User.find({}, function (err, users) {
+    res.json({ users: users });
+  })
 });
 
 app.use('/api', router);
