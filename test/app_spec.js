@@ -1,9 +1,9 @@
 process.env.PORT = 3000;
-const request   = require('supertest-as-promised');
-const expect    = require('expect.js');
-const app       = require('../app.js');
-const mongoose 	= require('mongoose');
-const mockgoose = require('mockgoose');
+const request    = require('supertest-as-promised');
+const expect     = require('expect.js');
+const app        = require('../app.js');
+const mongoose 	 = require('mongoose');
+const mockgoose  = require('mockgoose');
 const User       = require('../models/user.js');
 
 
